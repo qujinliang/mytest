@@ -5,7 +5,7 @@ class Page(object):
     页面基础类，用于所有页面的继承
     '''
 
-    mengzhu_url = 'http://www.mengzhu.tv'
+    mengzhu_url = 'https://u.mengzhu.tv/?ref=https%3A%2F%2Fb.mengzhu.tv%2F%23%2Faccount'
 
     def __init__(self,selenium_driver,base_url=mengzhu_url,parent=None):
         self.base_url = base_url
@@ -19,6 +19,7 @@ class Page(object):
         assert self.on_page(),'Did not land on %s ' %url
 
     def find_element(self,*loc):
+        #print(*loc)
         return self.driver.find_element(*loc)
 
     
@@ -29,7 +30,7 @@ class Page(object):
         self._open(self.url)
 
     def on_page(self):
-        return self.driver.find.current_url == （self.base_url + self.url)
+        return self.driver.current_url == (self.base_url + self.url)
 
     def script(self,src):
         return self.driver.execute_script(src)
