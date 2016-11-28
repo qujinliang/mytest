@@ -49,8 +49,8 @@ class login(Page):
         self.login_button()
         sleep(1)
 
-    user_error_hint_loc = (By.CSS_SELECTOR,'span.error_username errors>img.global_imgl')
-    pawd_error_hint_loc = (By.CSS_SELECTOR,'span.error_pwd errors')
+    user_error_hint_loc = (By.CSS_SELECTOR,"[class = 'error_username errors']")
+    pawd_error_hint_loc = (By.CSS_SELECTOR,"[class = 'error_pwd errors']")
     user_login_success_loc = (By.CSS_SELECTOR,"[data-reactid='.0.0.0.0.2.0.1']")
 
 
