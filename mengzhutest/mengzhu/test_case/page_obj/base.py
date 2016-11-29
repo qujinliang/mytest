@@ -5,7 +5,7 @@ class Page(object):
     页面基础类，用于所有页面的继承
     '''
 
-    mengzhu_url = 'https://u.mengzhu.tv/?ref=https%3A%2F%2Fb.mengzhu.tv%2F%23%2Faccount'
+    mengzhu_url = 'https://u.mengzhu.tv/'
 
     def __init__(self,selenium_driver,base_url=mengzhu_url,parent=None):
         self.base_url = base_url

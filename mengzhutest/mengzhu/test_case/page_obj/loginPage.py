@@ -9,7 +9,7 @@ class login(Page):
     用户登录页面
     '''
 
-    url = '/'
+    url = '/?ref=https%3A%2F%2Fb.mengzhu.tv%2F%23%2Faccount'
 
     #Action
     mengzhu_login_user_loc = (By.ID,'phoneNo')
