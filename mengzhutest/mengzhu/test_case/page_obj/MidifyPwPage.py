@@ -12,7 +12,7 @@ class midify(Page):
 	'''
 	url = "/"
 
-	#获取修改密码链接元素
+	#获取修改密码链接
 	midify_password_loc = (By.CSS_SELECTOR,"[data-reactid = '.0.0.1.0.0.0.1.$0.1.$1']")
 
 	#Action
@@ -29,15 +29,18 @@ class midify(Page):
 
 	#登录密码
 	def login_password(self,login_password):
+		self.find_element(*self.login_password_loc).clear()
 		self.find_element(*self.login_password_loc).send_keys(login_password)
 
 
 	#新密码
 	def new_password(self,new_password):
+		self.find_element(*self.new_password_loc).clear()
 		self.find_element(*self.new_password_loc).send_keys(new_password)
 
 	#确认密码
 	def confirm_password(self,confirm_password):
+		self.find_element(*self.confirm_password_loc).clear()
 		self.find_element(*self.confirm_password_loc).send_keys(confirm_password)
 
 
@@ -47,19 +50,40 @@ class midify(Page):
 	def user_confirm_password(self,loginpwd="",newpwd="",confirmpwd=""):
 
 		self.login_password(loginpwd)
-		sleep(1)
 		self.new_password(newpwd)
-		sleep(1)
 		self.confirm_password(confirmpwd)
-		sleep(1)
 		self.confirm_button()
-		sleep(1)
+
+
+	login_password_error_hint_loc = (By.CSS_SELECTOR,"[data-reactid = '.0.0.1.0.0.1.0.1.0.2']")
+	new_password_error_hint_loc = (By.CSS_SELECTOR,"[data-reactid = '.0.0.1.0.0.1.0.1.1.2']")
+	confirm_password_error_hint_loc = (By.CSS_SELECTOR,"[data-reactid = '.0.0.1.0.0.1.0.1.2.2']")
+
+	def login_password_error_hint(self):
+		return self.find_element(*self.login_password_error_hint_loc).text
+
+	def new_password_error_hint(self):
+		return self.find_element(*self.new_password_error_hint_loc).text
+
+	def confirm_password_error_hint(self):
+		return self.find_element(*self.confirm_password_error_hint_loc).text
+
+
+
 
 	confirm_password_success_loc = (By.CSS_SELECTOR,"[data-reactid = '.1.1.$dialog.0.2.0']")
+	confirm_password_button_loc = (By.CSS_SELECTOR,"[data-reactid = '.1.1.$dialog.0.2.1.0']")
 
 	#修改密码成功
 	def confirm_password_success(self):
 		return self.find_element(*self.confirm_password_success_loc).text
+
+	#弹窗确定按钮
+	def confirm_password_button(self):
+		return self.find_element(*self.confirm_password_button_loc).click()
+
+
+
 
 
 

@@ -18,17 +18,32 @@ class midifyTest(myunit.MyTest):
 	def confirm_longin(self):
 		midify(self.driver).mengzhu_midify()
 
-
-
 	def test_midify1(self):
+		self.confirm_longin()
+
+		self.confirm_pawd_verify()
+		po = midify(self.driver)
+		self.assertEqual(po.login_password_error_hint(),'密码不能为空')
+		self.assertEqual(po.new_password_error_hint(),'新密码不能为空')
+		self.assertEqual(po.confirm_password_error_hint(),'确认新密码不能为空')
+		function.insert_img(self.driver,"confirm_pawd_empty.jpg")
+
+
+
+
+	def test_midify5(self):
 		self.confirm_longin()
 
 		self.confirm_pawd_verify(loginpwd='123456q',newpwd='123456789q',confirmpwd='123456789q')
 		sleep(2)
 		po = midify(self.driver)
-		#self.assertEqual(po.confirm_password_success(),'密码修改成功')
-		#po.swith_to_alert()
+		#print (po.confirm_password_success())
+		self.assertEqual(po.confirm_password_success(),'密码修改成功')
+		po.confirm_password_button()
 		function.insert_img(self.driver,"confirm_pawd_ture.jpg")
+		sleep(1)
+		self.confirm_pawd_verify(loginpwd = '123456789q', newpwd = '123456q', confirmpwd = '123456q')
+		po.confirm_password_button()
 
 
 

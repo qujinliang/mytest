@@ -1,4 +1,6 @@
 #-*- coding=utf-8 -*-
+from selenium.common.exceptions import NoSuchElementException
+
 
 class Page(object):
     '''
@@ -20,7 +22,11 @@ class Page(object):
 
     def find_element(self,*loc):
         #print(*loc)
-        return self.driver.find_element(*loc)
+        try:
+            return self.driver.find_element(*loc)
+        except NoSuchElementException as e:
+            print(e)
+
 
     
     def find_elements(self,*loc):
