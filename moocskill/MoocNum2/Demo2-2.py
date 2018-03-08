@@ -11,3 +11,14 @@
 如何解决这个问题？
 '''
 
+# 为元组中的每一个元素命名，提高程序可读性
+
+# 方案一，给每个元素赋值一个变量名
+NAME, AGE, SEX, EMAIL = range(4)
+class Student:
+    def student(self):
+        student = ('Jim',16,'male','jim8721@gamail.com')
+        return student
+
+t = Student()
+print(t.student()[NAME], t.student()[AGE])
