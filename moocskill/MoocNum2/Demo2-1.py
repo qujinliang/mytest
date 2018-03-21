@@ -17,7 +17,7 @@ class FilterList:
         return data3
 
 
-print(FilterList.list_analysis(data))
+#print(FilterList.list_analysis(data))
 
 
 # 3.字典使用列表解析
