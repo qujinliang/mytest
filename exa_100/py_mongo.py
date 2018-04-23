@@ -1,9 +1,9 @@
 from pymongo import MongoClient
 import re
 
-# client = MongoClient('139.219.109.239',27017)  #演示环境
-#client = MongoClient('40.125.209.24', 27017)  # 测试环境
-client = MongoClient('42.159.115.213', 27017)  # 小当家线上数据库
+# client = MongoClient('',27017)  #演示环境
+#client = MongoClient('', 27017)  # 测试环境
+client = MongoClient('', 27017)  # 小当家线上数据库
 db = client.user
 db.authenticate("user", 'ysyc-mongo-user')
 db = client.user
