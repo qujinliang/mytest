@@ -7,7 +7,7 @@ client = MongoClient('', 27017)  # 小当家线上数据库
 db = client.user
 db.authenticate("user", 'ysyc-mongo-user')
 db = client.user
-collection = db.fc_invoice_info
+collection = db.fc_company_info
 
 # 查询发票结合中所有发票
 # for i in collection.find():
@@ -26,16 +26,23 @@ collection = db.fc_invoice_info
 
 class Check():
 	list = []
-	# 该方法是链接Mongodb数据库并读取发票数据
-	# 需要传三个参数，第一个参数是发票类型，第二个参数是查询日期范围的开始时间
-	# 第三个参数是查询日期范围的结束时间
-	def check_xdjmongo(self,fplx, startime, endtime):
-		list = collection.find({'fplx':re.compile(fplx),'kprq':{"$gt":startime,"$lt":endtime}})
+	"""
+	userid:传入账号的userid 查询该账号下的所有抬头
+	返回List列表
+	"""
+	def check_xdjmongo(self,userid):
+		list = collection.find({'user_id':userid})
 		return list
 
 
+ck = Check()
+data = ck.check_xdjmongo(1106)
 
-
+for i in data:
+	name = i.get('name')
+	createtime = i.get('create_time')
+	nssbh = i.get("nssbh")
+	print(createtime)
 	# for i in fp_list3:
 	# 	if i.get('fplx') == '10':
 	# 		fplx = i.get('fplx')
