@@ -80,5 +80,7 @@ __author__ = 'qujl'
     G = (sum(row) for row in M)                                   # 使用小括号可以创建所需接轨哦的生成器generator object
     next(G), next(G), next(G)                                     # 输出(6,15,24)
     G = {sum(row) for row in M}                                   # G = {6,15,24}解析语法还可以生成集合和字典
+    G = {i:sum(M[i]) for i in range(3)}                           # G = {0:6, 1:15,2:24}
+
 
 

@@ -3,9 +3,9 @@ import re
 
 # client = MongoClient('',27017)  #演示环境
 #client = MongoClient('', 27017)  # 测试环境
-client = MongoClient('', 27017)  # 小当家线上数据库
+client = MongoClient('ip', port='')  # 小当家线上数据库
 db = client.user
-db.authenticate("user", 'ysyc-mongo-user')
+db.authenticate("user", 'password')
 db = client.user
 collection = db.fc_company_info
 
