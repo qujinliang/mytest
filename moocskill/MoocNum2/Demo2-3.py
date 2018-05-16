@@ -14,7 +14,7 @@ data = [randint(0,20) for i in range(30)]
 # 方法一 data做为键 0为值生成字典
 keys = data
 c = dict.fromkeys(keys,0)
-# 遍历键，并给每一个存在的键+1
+# 遍历键，并给每一个存在的键值+1
 for x in keys:
     c[x] +=1
 sor = sorted(c.items(),key=lambda i:i[1],reverse=True)
