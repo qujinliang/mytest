@@ -19,8 +19,12 @@ for row in range(1,rsheet.nrows):
 
 wbook = xlwt.Workbook()
 wsheet = wbook.add_sheet(rsheet.name)
+
+# 设置写入内容的样式
 style = xlwt.easyxf('align: vertical center, horizontal center')
 
+# 遍历读取表格的行数次, 再遍历读取表格的列数次
+# 写入行列坐标位置，内容，和样式
 for r in range(rsheet.nrows):
     for c in range(rsheet.ncols):
         wsheet.write(r,c,rsheet.cell_value(r,c),style)
