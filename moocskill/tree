@@ -24,5 +24,10 @@ MoocNum5:I／O文件操作
 
 MoocNum6:读写文件
     Demo6-1：读写csv数据
-    
+    Demo6-2：读写json数据
+    Demo6-3：读写xml文件
+    Demo6-4：构建xml文档
+    Demo6-5：读写excel文件
+    Demo6-6：读excel文档，并写到另一个文档
+
 
