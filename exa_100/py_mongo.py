@@ -2,11 +2,11 @@ from pymongo import MongoClient
 import re
 import xlwt
 
-client = MongoClient('139.219.109.239', 27017)  # 演示环境
+client = MongoClient('', 27017)  # 演示环境
 # client = MongoClient('', 27017)  # 测试环境
 # client = MongoClient('', 27017)  # 小当家线上数据库
 db = client.user
-db.authenticate("user", 'ysyc-mongo-user')
+db.authenticate("", '')
 db = client.user
 collection_company = db.fc_company_info
 collection_invoce = db.fc_invoice_info
@@ -25,7 +25,7 @@ collection_invoce = db.fc_invoice_info
 # 		collection.remove(i)
 
 class Check:
-	list_1 = []
+	__list_1 = []
 	"""
 	userid:传入账号的userid 查询该账号下的所有抬头
 	返回List列表
@@ -36,14 +36,14 @@ class Check:
 	# 查询用户方法，传一个参数 Userid,返回用户列表迭代器
 	# pymongo.find返回的是游标，转成list就好判断了
 	def check_company(self, userid):
-		list_1 = list(collection_company.find({'user_id': int(userid)}))
-		if list_1:
-			return list_1
+		__list_1 = list(collection_company.find({'user_id': int(userid)}))
+		if __list_1:
+			return __list_1
 		else:
 			print('不存在的userid %s' % userid)
-			return list_1
+			return __list_1
 
-	# 查询发票库，传一个参数 购方识别号，返回迭一个发票的迭代器
+	# 查询发票库，传一个参数 购方识别号，返回迭一个发票的列表
 	def check_invoce(self, gfsbh):
 		lt = collection_invoce.find({'gfsbh': gfsbh})
 		if type(lt) != type('a'):
@@ -53,28 +53,28 @@ class Check:
 			print(lt)
 
 	# 传3个参数，userid必传,name 和 nssbh可以不错，默认None
-	# 如果不传name和nssbh会打印，抬头信息而不是返回结果
+	# 如果不传name和nssbh会打印抬头信息而不是返回结果
 	def company_data(self, userid, name=None, nssbh=None):
-		name_list = []
-		nssbh_list = []
-		data_list = []
+		__name_list = []
+		__nssbh_list = []
+		__data_list = []
 		data = Check.check_company(self, userid)
 		for i in data:
 			if name == 'name':
 				company_name = i.get('name')
-				name_list.append(company_name)
+				__name_list.append(company_name)
 			if nssbh == 'nssbh':
 				company_nssbh = i.get('nssbh')
-				nssbh_list.append(company_nssbh)
+				__nssbh_list.append(company_nssbh)
 			if name == None and nssbh == None:
 				zip_list = [i.get('name'),i.get('nssbh'),i.get('addr'),i.get('bank'),i.get('bank_No'),i.get('create_time')]
-				data_list.append(zip_list)
-		if data_list:
-			return data_list
-		if name_list:
-			return name_list
-		if nssbh_list:
-			return nssbh_list
+				__data_list.append(zip_list)
+		if __data_list:
+			return __data_list
+		if __name_list:
+			return __name_list
+		if __nssbh_list:
+			return __nssbh_list
 
 	# 传入纳税人识别号，打印出发票中的信息
 	def company_invoice(self,nssbh):
@@ -91,28 +91,28 @@ class Check:
 			else:
 				print(i,gfsbh,gfmc,dzdh,gfyhzh)
 
+if __name__ == '__main__':
 
-ck = Check()
-nssbh = ck.company_data(11)
-print(nssbh)
+	ck = Check()
+	nssbh = ck.company_data(11)
+	print(nssbh)
+	# ck.company_invoice(nssbh)
+	wbook = xlwt.Workbook()
+	wsheet = wbook.add_sheet('sheet1')
+	data1 = nssbh[0]
+	nc = len(data1)
+	print(nc)
+	title = ['抬头', '税号', '地址', '银行', '开户号', '开通时间']
 
-# ck.company_invoice(nssbh)
-wbook = xlwt.Workbook()
-wsheet = wbook.add_sheet('sheet1')
-data1 = nssbh[0]
-nc = len(data1)
-print(nc)
-title = ['抬头','税号','地址','银行','开户号','开通时间']
-i = 0
-if i < nc:
-	for t in title:
-		wsheet.write(0, i, t)
-		i+=1
-for r in range(1,len(nssbh)):
-	for c in range(nc):
-		wsheet.write(r,c,nssbh[r][c])
-wbook.save('output.xls')
-client.close()
+	for t in range(len(title)):
+		wsheet.write(0, t, title[t])
+
+	for r in range(1, len(nssbh)):
+		for c in range(nc):
+			wsheet.write(r, c, nssbh[r][c])
+
+	wbook.save('./data/output.xls')
+	client.close()
 
 
 
@@ -135,19 +135,6 @@ client.close()
 #         # print(nssbh,gfsh,gfmc,dzdh,gfyhzh)
 #         with open('huilianyi.txt', 'at') as huilianyi:
 #             huilianyi.writelines("%s %s \n" % nssbh % gfsh)
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 # for i in fp_list3:
 # 	if i.get('fplx') == '10':

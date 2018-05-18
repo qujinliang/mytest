@@ -2,4 +2,11 @@
 目录：
     data: 操作的数据文档
 
+    chengfakoujue: 打印出乘法口诀表
+    contrast:      对比两个json，打印出不同的值
+    loopcheck:     从数据库读取发票数据，然后调用查验接口查验，最后把查验失败的写入到txt文档中
+    number:        斐波那契数列
+    openpyxl:      操作excel的包
+    py_mongo:      操作pymongo，查询数据，筛选结果，操作xlwt写入数据
+    pytxt:         操作txt文件，读取文件中的某一列，写入新的文件
 
