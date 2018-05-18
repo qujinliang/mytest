@@ -30,4 +30,8 @@ MoocNum6:读写文件
     Demo6-5：读写excel文件
     Demo6-6：读excel文档，并写到另一个文档
 
+MoocNum7:
+    Demo7-1：派生内置不可变类型并修改实例化行为
+    Demo7-2：为创建大量实例节省内存
+    Demo7-3：让对象支持上下文管理
 
