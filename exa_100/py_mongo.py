@@ -2,11 +2,11 @@ from pymongo import MongoClient
 import re
 import xlwt
 
-client = MongoClient('', 27017)  # 演示环境
+# client = MongoClient('', 27017)  # 演示环境
 # client = MongoClient('', 27017)  # 测试环境
-# client = MongoClient('', 27017)  # 小当家线上数据库
+client = MongoClient('###', 27017)  # 小当家线上数据库
 db = client.user
-db.authenticate("", '')
+db.authenticate("###", '###')
 db = client.user
 collection_company = db.fc_company_info
 collection_invoce = db.fc_invoice_info
@@ -52,7 +52,7 @@ class Check:
 			lt = ' '
 			print(lt)
 
-	# 传3个参数，userid必传,name 和 nssbh可以不错，默认None
+	# 传3个参数，userid必传,name 和 nssbh可以不传，默认None
 	# 如果不传name和nssbh会打印抬头信息而不是返回结果
 	def company_data(self, userid, name=None, nssbh=None):
 		__name_list = []
@@ -78,6 +78,7 @@ class Check:
 
 	# 传入纳税人识别号，打印出发票中的信息
 	def company_invoice(self,nssbh):
+		__fp_list = []
 		for i in nssbh:
 			gfsh = Check.check_invoce(self,i)
 			for j in gfsh:
@@ -89,29 +90,34 @@ class Check:
 			if i != gfsbh:
 				pass
 			else:
-				print(i,gfsbh,gfmc,dzdh,gfyhzh)
+				# print(i,gfsbh,gfmc,dzdh,gfyhzh)
+				zip_list = [i,gfsbh,gfmc,dzdh,gfyhzh]
+				__fp_list.append(zip_list)
+		if __fp_list:
+			print(__fp_list)
+			return __fp_list
+
 
 if __name__ == '__main__':
 
 	ck = Check()
-	nssbh = ck.company_data(11)
+	nssbh = ck.company_data(1106,nssbh='nssbh')
 	print(nssbh)
-	# ck.company_invoice(nssbh)
+	fp_list = ck.company_invoice(nssbh)
 	wbook = xlwt.Workbook()
 	wsheet = wbook.add_sheet('sheet1')
-	data1 = nssbh[0]
+	data1 = fp_list[0]
 	nc = len(data1)
-	print(nc)
-	title = ['抬头', '税号', '地址', '银行', '开户号', '开通时间']
+	title = ['抬头', '纳税人识别号', '地址', '开户行', '银行账号', '开通时间']
 
 	for t in range(len(title)):
 		wsheet.write(0, t, title[t])
 
-	for r in range(1, len(nssbh)):
+	for r in range(1, len(fp_list)):
 		for c in range(nc):
-			wsheet.write(r, c, nssbh[r][c])
+			wsheet.write(r, c, fp_list[r][c])
 
-	wbook.save('./data/output.xls')
+	wbook.save('./data/output2.xlsx')
 	client.close()
 
 
