@@ -4,9 +4,9 @@ import xlwt
 
 # client = MongoClient('', 27017)  # 演示环境
 # client = MongoClient('', 27017)  # 测试环境
-client = MongoClient('###', 27017)  # 小当家线上数据库
+client = MongoClient('', 27017)  # 小当家线上数据库
 db = client.user
-db.authenticate("###", '###')
+db.authenticate("", '')
 db = client.user
 collection_company = db.fc_company_info
 collection_invoce = db.fc_invoice_info
@@ -100,24 +100,44 @@ class Check:
 
 if __name__ == '__main__':
 
+
 	ck = Check()
-	nssbh = ck.company_data(1106,nssbh='nssbh')
-	print(nssbh)
-	fp_list = ck.company_invoice(nssbh)
+	# 查询compnay库中的user_id为1106的抬头，统计出纳税人识别号
+	# 然后再根据纳税人识别号查询invoice库中的发票，得到公司地址开户行等信息
+	# nssbh = ck.company_data(1106,nssbh='nssbh')
+	# print(nssbh)
+	# fp_list = ck.company_invoice(nssbh)
+	# data1 = fp_list[0]
+	# nc = len(data1)
+	# title = ['抬头', '纳税人识别号', '地址', '开户行', '银行账号', '开通时间']
+    #
+	# for t in range(len(title)):
+	# 	wsheet.write(0, t, title[t])
+    #
+	# for r in range(1, len(fp_list)):
+	# 	for c in range(nc):
+	# 		wsheet.write(r, c, fp_list[r][c])
+    #
+	# wbook.save('./data/output5.xlsx')
+	# client.close()
+
+	# 直接查询company库的抬头信息，信息不全没有公司地址和开户行信息
+	company_data = ck.company_data(1106)
+	print(company_data)
 	wbook = xlwt.Workbook()
 	wsheet = wbook.add_sheet('sheet1')
-	data1 = fp_list[0]
-	nc = len(data1)
+	data2 = company_data[0]
+	nc2 = len(data2)
 	title = ['抬头', '纳税人识别号', '地址', '开户行', '银行账号', '开通时间']
 
 	for t in range(len(title)):
 		wsheet.write(0, t, title[t])
 
-	for r in range(1, len(fp_list)):
-		for c in range(nc):
-			wsheet.write(r, c, fp_list[r][c])
+	for r in range(1, len(company_data)):
+		for c in range(nc2):
+			wsheet.write(r, c, company_data[r][c])
 
-	wbook.save('./data/output2.xlsx')
+	wbook.save('./data/output6.xlsx')
 	client.close()
 
 
