@@ -1,0 +1,13 @@
+from PIL import Image
+import time
+
+# 打开一个jpg图像文件,注意是当前路径;
+im = Image.open('./image/test.jpg') # type: Image.Image
+# 获得图像尺寸:
+w,h = im.size
+print('Original image size: %sx%s' %(w,h))
+# 缩放到50%；
+im.thumbnail((w//2,h//2))
+print('Resize image to: %sx%s' %(w//2,h//2))
+# 把缩放后的图片用jpeg格式保存;
+im.save('./image/thumbnail.jpg','jpeg')
